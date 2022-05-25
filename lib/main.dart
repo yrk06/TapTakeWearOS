@@ -30,19 +30,28 @@ class TapTake extends StatelessWidget {
             primarySwatch: Colors.blue,
             dividerColor: Colors.yellowAccent,
             textTheme: const TextTheme(
-                headline1: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 36,
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Kanit'),
-                headline2: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 34,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'Kanit'),
-                    )),
-                
+              headline1: TextStyle(
+                  color: Colors.yellow,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Kanit'),
+              headline2: TextStyle(
+                  color: Colors.yellow,
+                  fontSize: 34,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Kanit'),
+              headline3: TextStyle(
+                  color: Colors.black,
+                  fontSize: 34,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Kanit'),
+              bodyText1: TextStyle(
+                  color: Colors.yellow,
+                  fontSize: 24,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Kanit'),
+            )),
         home: const SplashScreen());
   }
 }
@@ -50,26 +59,54 @@ class TapTake extends StatelessWidget {
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
-  
-
   @override
   Widget build(BuildContext context) {
-    void take() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RecentOders()));
+    void takePedidos() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const RecentOders()));
     }
+
+    void takeEntregas() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const RecentOders()));
+    }
+
     return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 0, end: 1.0),
         duration: const Duration(milliseconds: 500),
         builder: (BuildContext context, double opacity, Widget? child) {
-          return Opacity(
-            opacity: opacity,
-            child: GestureDetector(
-              onTap: take,
-              child: Center(
-                    child: Text(
-                  "TapTake",
-                  style: Theme.of(context).textTheme.headline1,
-                )),
+          return DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.black),
+            child: Opacity(
+              opacity: opacity,
+              child: GestureDetector(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "TapTake",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      ElevatedButton(
+                          
+                          onPressed: takePedidos,
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)
+                            )),
+                            backgroundColor: MaterialStateProperty.all(Colors.yellow),
+                          ), child: Text("Pedidos", style: Theme.of(context).textTheme.headline3),),
+                      ElevatedButton(
+                          
+                          onPressed: takeEntregas,
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)
+                            )),
+                            backgroundColor: MaterialStateProperty.all(Colors.yellow),
+                          ), child: Text("Entregas", style: Theme.of(context).textTheme.headline3),),
+                    ]),
+              ),
             ),
           );
         });
